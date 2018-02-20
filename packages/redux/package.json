@@ -1,0 +1,14 @@
+{
+  "name": "@rx-dispatcher/redux",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "NODE_ENV=test jest --config ../../scripts/jest.config.js",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage"
+  },
+  "dependencies": {
+    "flux-standard-action": "^2.0.1",
+    "redux": "^3.7.2",
+    "rxjs": "^5.5.6"
+  }
+}
