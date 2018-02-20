@@ -2,7 +2,7 @@
   "name": "@rx-dispatcher/flux",
   "version": "0.0.1",
   "scripts": {
-    "test": "NODE_ENV=test jest --config ../../scripts/jest.config.js",
+    "test": "NODE_ENV=test jest --config ../../config/jest.config.js",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage"
   },
