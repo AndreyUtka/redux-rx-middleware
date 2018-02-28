@@ -17,7 +17,6 @@ export enum Sequence {
 }
 
 export const rxMiddleware: RxMiddleware = () => (next) => <A extends TypedAction>(action: A): A => {
-    (action as ObservableAction<any>).meta.sequence = Sequence.Complete;
     if ((action as FSA<any>).payload instanceof Observable) {
         (action as ObservableAction<any>).payload.subscribe({
             next: (data) => next({ type: action.type, payload: data, meta: { sequence: Sequence.Next } }),

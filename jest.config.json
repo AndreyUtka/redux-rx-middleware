@@ -1,0 +1,9 @@
+{
+  "transform": {
+    ".ts": "ts-jest"
+  },
+  "collectCoverage": false,
+  "collectCoverageFrom": ["src/**/*.ts"],
+  "testRegex": "src/.*.spec.ts$",
+  "moduleFileExtensions": ["ts", "js", "json"]
+}

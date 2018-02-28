@@ -11,8 +11,8 @@ describe("RxMiddleware", () => {
         dispatch = rxMiddleware()(mockDispatch);
     });
 
-    it("handles Flux standard actions", async () => {
-        await dispatch({
+    it("handles Flux standard actions", () => {
+        dispatch({
             type: "ACTION_TYPE",
             payload: Observable.from([1, 2, 3]),
         });
@@ -20,7 +20,7 @@ describe("RxMiddleware", () => {
         expect(mockDispatch.mock.calls).toMatchSnapshot();
     });
 
-    it("ignores non-observables", async () => {
+    it("ignores non-observables", () => {
         dispatch({ type: "ACTION_TYPE" });
         expect(mockDispatch.mock.calls).toMatchSnapshot();
     });
