@@ -23,6 +23,7 @@
     "no-require-imports": true,
     "encoding": true,
     "number-literal-format": true,
+    "interface-name": false,
     "prefer-switch": true,
     "prefer-template": true,
     "type-literal-delimiter": true,
