@@ -2,20 +2,9 @@
   "extends": ["tslint:latest"],
   "rules": {
     "no-import-side-effect": true,
-    "no-magic-numbers": true,
     "no-parameter-reassignment": true,
     "only-arrow-functions": false,
     "no-submodule-imports": false,
-    "typedef": [
-      true,
-      "call-signature",
-      "arrow-call-signature",
-      "parameter",
-      "arrow-parameter",
-      "variable-declaration",
-      "property-declaration",
-      "member-variable-declaration"
-    ],
     "no-console": [true, "log", "warn", "error"],
     "no-dynamic-delete": true,
     "no-floating-promises": [true, "Promise"],
@@ -28,6 +17,7 @@
     "no-void-expression": true,
     "restrict-plus-operands": true,
     "use-default-type-parameter": true,
+    "object-literal-sort-keys": false,
     "indent": [true, "spaces", 4],
     "max-line-length": [true, 120],
     "no-require-imports": true,
