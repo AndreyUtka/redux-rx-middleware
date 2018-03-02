@@ -1,18 +1,10 @@
 import { Action, Dispatch } from "redux";
-import { Observable } from "rxjs";
+import { Observable, Observer } from "rxjs";
 
 interface FSA<TPayload = any, TMeta = any> extends Action {
-    payload: TPayload;
+    payload?: TPayload;
     error?: boolean;
     meta?: TMeta;
-}
-
-export type ObservableAction<TObservable = any, TMeta = any> = FSA<Observable<TObservable>, TMeta>;
-type TypedAction = Action | FSA<any> | ObservableAction<any>;
-type RxMiddleware = <S>() => (next: Dispatch<S>) => <A extends TypedAction>(action: A) => A;
-
-interface IMeta {
-    sequence: Sequence;
 }
 
 export enum Sequence {
@@ -21,13 +13,38 @@ export enum Sequence {
     Complete = "complete",
 }
 
+export type ObservableAction<TObservable = any, TMeta = any> = FSA<Observable<TObservable>, TMeta>;
+type TypedAction = Action | FSA | ObservableAction;
+type RxMiddleware = <S>() => (next: Dispatch<S>) => <A extends TypedAction>(action: A) => A;
+
+class ActionObserver implements Observer<any> {
+    constructor(private onNext: Dispatch<any>, private action: ObservableAction) {}
+
+    public next(data: any) {
+        this.onNext(this.createAction(Sequence.Next, data));
+    }
+
+    public error(error: any) {
+        this.onNext(this.createAction(Sequence.Error, error, true));
+    }
+
+    public complete() {
+        this.onNext(this.createAction(Sequence.Complete));
+    }
+
+    private createAction(sequence: Sequence, newPayload: any = null, error = false): FSA {
+        const { payload, meta, ...action } = this.action;
+        const newAction: FSA = { ...action, meta: { ...meta, sequence } };
+        if (newPayload) {
+            newAction.payload = newPayload;
+        }
+        return error ? { ...newAction, error: true } : newAction;
+    }
+}
+
 export const rxMiddleware: RxMiddleware = () => (next) => <A extends TypedAction>(action: A): A => {
     if ((action as FSA).payload instanceof Observable) {
-        (action as ObservableAction).payload.subscribe({
-            next: (data) => next({ type: action.type, payload: data, meta: { sequence: Sequence.Next } }),
-            error: (err) => next({ type: action.type, payload: err, error: true, meta: { sequence: Sequence.Error } }),
-            complete: () => next({ type: action.type, meta: { sequence: Sequence.Complete } }),
-        });
+        (action as ObservableAction).payload.subscribe(new ActionObserver(next, action as ObservableAction));
         return action;
     }
 
