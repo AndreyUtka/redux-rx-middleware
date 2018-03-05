@@ -23,6 +23,15 @@
     "noUnusedParameters": true,
     "pretty": true,
     "removeComments": true,
-    "target": "es5"
-  }
+    "target": "es5",
+    // "declaration": true,
+    // "declarationDir": "dist/typings",
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./dist"
+  ]
 }
