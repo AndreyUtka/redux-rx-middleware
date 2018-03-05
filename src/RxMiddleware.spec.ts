@@ -1,5 +1,8 @@
 import { Dispatch } from "redux";
-import { Observable } from "rxjs";
+import { concat } from "rxjs/observable/concat";
+import { from } from "rxjs/observable/from";
+import { of } from "rxjs/observable/of";
+import { _throw } from "rxjs/observable/throw";
 import { ObservableAction, rxMiddleware, Sequence } from "./";
 
 describe("RxMiddleware", () => {
@@ -14,7 +17,7 @@ describe("RxMiddleware", () => {
     it("should handle Flux standard actions", () => {
         const action: ObservableAction<number> = {
             type: "ACTION_TYPE",
-            payload: Observable.from([1, 2, 3]),
+            payload: from([1, 2, 3]),
         };
         dispatch(action);
 
@@ -30,7 +33,7 @@ describe("RxMiddleware", () => {
         const error = new Error();
         const action: ObservableAction<number> = {
             type: "ACTION_TYPE",
-            payload: Observable.concat(Observable.of(1, 2), Observable.throw(error), Observable.of(3)),
+            payload: concat(of(1, 2), _throw(error), of(3)),
         };
         dispatch(action);
 
@@ -44,7 +47,7 @@ describe("RxMiddleware", () => {
     it("should not override additional action fields", () => {
         const action: ObservableAction<number> = {
             type: "ACTION_TYPE",
-            payload: Observable.from([1, 2, 3]),
+            payload: from([1, 2, 3]),
             meta: {
                 test: "test",
             },

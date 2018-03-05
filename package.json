@@ -1,14 +1,13 @@
 {
-  "name": "rx-dispatcher",
+  "name": "redux-rx-middleware",
   "version": "1.0.0",
-  "repository": "git@github.com:AndreyUtka/rx-dispatcher.git",
+  "repository": "git@github.com:AndreyUtka/redux-rx-middleware.git",
   "author": "AndreyUtka <AndreyUtka@gmail.com>",
   "license": "MIT",
-  "private": true,
   "bugs": {
-    "url": "https://github.com/AndreyUtka/rx-dispatcher/issues"
+    "url": "https://github.com/AndreyUtka/redux-rx-middleware/issues"
   },
-  "homepage": "https://github.com/AndreyUtka/rx-dispatcher#readme",
+  "homepage": "https://github.com/AndreyUtka/redux-rx-middleware#readme",
   "engines": {
     "node": ">=8.9.4",
     "npm": ">=5.6.0",
@@ -16,6 +15,8 @@
   },
   "scripts": {
     "build": "tsc && npm run build",
+    "styleguide": "npm run lint && npm run format:check",
+    "lint": "tslint --project ./tsconfig.json --force --format stylish",
     "format:fix": "prettier -l --write '{scripts,src}/**/*.{ts,js}' || exit 0",
     "format:check": "prettier -l '{scripts,src}/**/*.{ts,js}'",
     "test": "jest --config scripts/jest.config.js",

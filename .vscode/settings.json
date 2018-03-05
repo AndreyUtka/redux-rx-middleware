@@ -4,5 +4,5 @@
   "editor.rulers": [
     120
   ],
-  "jest.pathToConfig": "jest.config.json",
+  "jest.pathToConfig": "scripts/jest.config.js",
 }
