@@ -1,6 +1,7 @@
 {
-  "extends": ["tslint:latest"],
+  "extends": ["tslint:latest", "rxjs-tslint-rules"],
   "rules": {
+    "trailing-comma": true,
     "no-import-side-effect": true,
     "no-parameter-reassignment": true,
     "only-arrow-functions": false,

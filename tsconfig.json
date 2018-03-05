@@ -7,7 +7,6 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "inlineSourceMap": true,
-    "jsx": "react",
     "lib": [
       "es2015",
       "dom",

@@ -1,5 +1,6 @@
 import { Action, Dispatch } from "redux";
-import { Observable, Observer } from "rxjs";
+import { Observable } from "rxjs/Observable";
+import { Observer } from "rxjs/Observer";
 
 interface FSA<TPayload = any, TMeta = any> extends Action {
     payload?: TPayload;
@@ -18,7 +19,7 @@ type TypedAction = Action | FSA | ObservableAction;
 type RxMiddleware = <S>() => (next: Dispatch<S>) => <A extends TypedAction>(action: A) => A;
 
 class ActionObserver implements Observer<any> {
-    constructor(private onNext: Dispatch<any>, private action: ObservableAction) {}
+    constructor(private action: ObservableAction, private onNext: (newAction: FSA) => void) {}
 
     public next(data: any) {
         this.onNext(this.createAction(Sequence.Next, data));
@@ -44,7 +45,7 @@ class ActionObserver implements Observer<any> {
 
 export const rxMiddleware: RxMiddleware = () => (next) => <A extends TypedAction>(action: A): A => {
     if ((action as FSA).payload instanceof Observable) {
-        (action as ObservableAction).payload.subscribe(new ActionObserver(next, action as ObservableAction));
+        (action as ObservableAction).payload.subscribe(new ActionObserver(action, (newAction: FSA) => next(newAction)));
         return action;
     }
 
