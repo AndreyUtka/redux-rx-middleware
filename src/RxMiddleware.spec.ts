@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { Observable } from "rxjs";
-import { ObservableAction, rxMiddleware, Sequence } from "./RxMiddleware";
+import { ObservableAction, rxMiddleware, Sequence } from "./";
 
 describe("RxMiddleware", () => {
     let mockDispatch: jest.Mock;
@@ -23,6 +23,21 @@ describe("RxMiddleware", () => {
             [{ meta: { sequence: Sequence.Next }, payload: 2, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next }, payload: 3, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Complete }, type: "ACTION_TYPE" }],
+        ]);
+    });
+
+    it("should handle actions with error", () => {
+        const error = new Error();
+        const action: ObservableAction<number> = {
+            type: "ACTION_TYPE",
+            payload: Observable.concat(Observable.of(1, 2), Observable.throw(error), Observable.of(3)),
+        };
+        dispatch(action);
+
+        expect(mockDispatch.mock.calls).toEqual([
+            [{ meta: { sequence: Sequence.Next }, payload: 1, type: "ACTION_TYPE" }],
+            [{ meta: { sequence: Sequence.Next }, payload: 2, type: "ACTION_TYPE" }],
+            [{ meta: { sequence: Sequence.Error }, payload: error, error: true, type: "ACTION_TYPE" }],
         ]);
     });
 

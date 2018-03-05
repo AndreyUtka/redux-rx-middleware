@@ -1,6 +1,6 @@
 {
   "name": "rx-dispatcher",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "repository": "git@github.com:AndreyUtka/rx-dispatcher.git",
   "author": "AndreyUtka <AndreyUtka@gmail.com>",
   "license": "MIT",
@@ -16,7 +16,9 @@
   },
   "scripts": {
     "build": "tsc && npm run build",
-    "test": "jest --config jest.config.json",
+    "format:fix": "prettier -l --write '{scripts,src}/**/*.{ts,js}' || exit 0",
+    "format:check": "prettier -l '{scripts,src}/**/*.{ts,js}'",
+    "test": "jest --config scripts/jest.config.js",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage"
   },
