@@ -33,7 +33,7 @@
     "tslib": "^1.9.0"
   },
   "devDependencies": {
-    "@types/jest": "22.1.4",
+    "@types/jest": "22.2.0",
     "chalk": "2.3.2",
     "google-closure-compiler-js": "20180204.0.0",
     "jest": "22.4.2",
