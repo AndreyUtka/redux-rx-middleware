@@ -40,7 +40,7 @@ class ActionObserver implements Observer<any> {
 
     private createAction(sequence: Sequence, newPayload: any = null, error = false): ActionMeta<any, IObservableMeta> {
         const { payload, meta, ...action } = this.action;
-        const newAction: ActionMeta<any, any> = { ...action, meta: { ...meta, sequence } };
+        const newAction: ActionMeta<any, IObservableMeta> = { ...action, meta: { ...meta, sequence } };
         if (newPayload) {
             newAction.payload = newPayload;
         }
