@@ -3,7 +3,7 @@ import { concat } from "rxjs/observable/concat";
 import { from } from "rxjs/observable/from";
 import { of } from "rxjs/observable/of";
 import { _throw } from "rxjs/observable/throw";
-import { ObservableAction, rxMiddleware, Sequence } from "./";
+import { IObservableAction, rxMiddleware, Sequence } from "./";
 
 describe("RxMiddleware", () => {
     let mockDispatch: jest.Mock;
@@ -15,7 +15,7 @@ describe("RxMiddleware", () => {
     });
 
     it("should handle Flux standard actions", () => {
-        const action: ObservableAction<number> = {
+        const action: IObservableAction<number> = {
             type: "ACTION_TYPE",
             payload: from([1, 2, 3]),
         };
@@ -31,7 +31,7 @@ describe("RxMiddleware", () => {
 
     it("should handle actions with error", () => {
         const error = new Error();
-        const action: ObservableAction<number> = {
+        const action: IObservableAction<number> = {
             type: "ACTION_TYPE",
             payload: concat(of(1, 2), _throw(error), of(3)),
         };
@@ -45,7 +45,7 @@ describe("RxMiddleware", () => {
     });
 
     it("should not override additional action fields", () => {
-        const action: ObservableAction<number> = {
+        const action: IObservableAction<number> = {
             type: "ACTION_TYPE",
             payload: from([1, 2, 3]),
             meta: {

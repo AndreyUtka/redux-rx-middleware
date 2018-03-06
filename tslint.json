@@ -34,7 +34,7 @@
         "asyncArrow": "always"
       }
     ],
-    "no-implicit-dependencies": [true, "dev"],
+    "no-implicit-dependencies": false,
     "rxjs-no-add": true,
     "rxjs-deep-operators": true,
     "rxjs-no-ignored-subscribe": true,

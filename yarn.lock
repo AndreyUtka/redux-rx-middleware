@@ -20,6 +20,10 @@
   version "22.2.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.0.tgz#55ce83139f7ad1b48b414c3927746614c6963c0f"
 
+"@types/redux-actions@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@types/redux-actions/-/redux-actions-2.2.4.tgz#7794077a91df223c9dccc035a2d3e9b88d8bc18e"
+
 abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"

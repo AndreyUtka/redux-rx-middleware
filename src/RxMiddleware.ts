@@ -1,12 +1,7 @@
-import { Action, Middleware } from "redux";
+import { Action, Dispatch } from "redux";
+import { Action as ActionPayload, ActionMeta } from "redux-actions";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
-
-interface FSA<TPayload = any, TMeta = any> extends Action {
-    payload?: TPayload;
-    error?: boolean;
-    meta?: TMeta;
-}
 
 export enum Sequence {
     Next = "next",
@@ -14,11 +9,22 @@ export enum Sequence {
     Complete = "complete",
 }
 
-type ObservableAction<TObservable = any, TMeta = any> = FSA<Observable<TObservable>, TMeta>;
-type TypedAction = Action | FSA | ObservableAction;
+export interface IObservableMeta {
+    sequence: Sequence;
+}
+
+export interface IObservableAction<TObservable = any, TMeta = any> extends ActionPayload<Observable<TObservable>> {
+    meta?: TMeta;
+}
+
+export type TypedAction = Action | ActionPayload<any> | IObservableAction;
+export type RxMiddleware = <S>() => (next: Dispatch<S>) => <A extends TypedAction>(action: A) => A;
 
 class ActionObserver implements Observer<any> {
-    constructor(private action: ObservableAction, private onNext: (newAction: FSA) => void) {}
+    constructor(
+        private action: IObservableAction,
+        private onNext: (newAction: ActionMeta<any, IObservableMeta>) => void
+    ) {}
 
     public next(data: any) {
         this.onNext(this.createAction(Sequence.Next, data));
@@ -32,9 +38,9 @@ class ActionObserver implements Observer<any> {
         this.onNext(this.createAction(Sequence.Complete));
     }
 
-    private createAction(sequence: Sequence, newPayload: any = null, error = false): FSA {
+    private createAction(sequence: Sequence, newPayload: any = null, error = false): ActionMeta<any, IObservableMeta> {
         const { payload, meta, ...action } = this.action;
-        const newAction: FSA = { ...action, meta: { ...meta, sequence } };
+        const newAction: ActionMeta<any, any> = { ...action, meta: { ...meta, sequence } };
         if (newPayload) {
             newAction.payload = newPayload;
         }
@@ -42,9 +48,11 @@ class ActionObserver implements Observer<any> {
     }
 }
 
-export const rxMiddleware: Middleware = () => (next) => <A extends TypedAction>(action: A): A => {
-    if ((action as FSA).payload instanceof Observable) {
-        (action as ObservableAction).payload.subscribe(new ActionObserver(action, (newAction: FSA) => next(newAction)));
+export const rxMiddleware: RxMiddleware = () => (next) => <A extends TypedAction>(action: A): A => {
+    if ((action as ActionPayload<any>).payload instanceof Observable) {
+        (action as IObservableAction).payload.subscribe(
+            new ActionObserver(action, (newAction: ActionMeta<any, IObservableMeta>) => next(newAction))
+        );
         return action;
     }
 
