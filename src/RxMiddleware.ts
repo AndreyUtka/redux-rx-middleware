@@ -1,4 +1,4 @@
-import { Action, Dispatch } from "redux";
+import { Action, Middleware } from "redux";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 
@@ -14,9 +14,8 @@ export enum Sequence {
     Complete = "complete",
 }
 
-export type ObservableAction<TObservable = any, TMeta = any> = FSA<Observable<TObservable>, TMeta>;
+type ObservableAction<TObservable = any, TMeta = any> = FSA<Observable<TObservable>, TMeta>;
 type TypedAction = Action | FSA | ObservableAction;
-type RxMiddleware = <S>() => (next: Dispatch<S>) => <A extends TypedAction>(action: A) => A;
 
 class ActionObserver implements Observer<any> {
     constructor(private action: ObservableAction, private onNext: (newAction: FSA) => void) {}
@@ -43,7 +42,7 @@ class ActionObserver implements Observer<any> {
     }
 }
 
-export const rxMiddleware: RxMiddleware = () => (next) => <A extends TypedAction>(action: A): A => {
+export const rxMiddleware: Middleware = () => (next) => <A extends TypedAction>(action: A): A => {
     if ((action as FSA).payload instanceof Observable) {
         (action as ObservableAction).payload.subscribe(new ActionObserver(action, (newAction: FSA) => next(newAction)));
         return action;

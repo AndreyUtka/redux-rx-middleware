@@ -15,9 +15,10 @@
   },
   "scripts": {
     "prebuild": "rm -rf ./dist",
-    "build": "npm run build:cjs && npm run build:esm",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
     "build:cjs": "tsc -p config/tsconfig.cjs.json",
     "build:esm": "tsc -p config/tsconfig.esm.json",
+    "build:umd": "node scripts/rollup.config.js",
     "styleguide": "npm run lint && npm run format:check",
     "lint": "tslint --project ./tsconfig.json --force --format stylish",
     "format:fix": "prettier -l --write '{scripts,src}/**/*.{ts,js}' || exit 0",
@@ -28,18 +29,19 @@
   },
   "dependencies": {
     "redux": "^3.7.2",
-    "rxjs": "^5.5.6"
+    "rxjs": "^5.5.6",
+    "tslib": "^1.9.0"
   },
   "devDependencies": {
     "@types/jest": "22.1.4",
+    "chalk": "2.3.2",
     "google-closure-compiler-js": "20180204.0.0",
     "jest": "22.4.2",
     "prettier": "1.11.1",
-    "rollup": "0.56.3",
+    "rollup": "0.56.4",
     "rollup-plugin-node-resolve": "3.0.3",
     "rxjs-tslint-rules": "3.14.0",
     "ts-jest": "22.4.1",
-    "tslib": "1.9.0",
     "tslint": "5.9.1",
     "typescript": "2.7.2"
   }

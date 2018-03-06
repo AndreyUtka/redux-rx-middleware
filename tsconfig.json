@@ -6,6 +6,7 @@
     "emitBOM": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
+    "noEmitHelpers": true,
     "inlineSourceMap": true,
     "lib": [
       "es2015",
@@ -14,7 +15,6 @@
     ],
     "module": "es2015",
     "moduleResolution": "node",
-    "noEmitHelpers": true,
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -24,8 +24,8 @@
     "pretty": true,
     "removeComments": true,
     "target": "es5",
-    // "declaration": true,
-    // "declarationDir": "dist/typings",
+    "declaration": true,
+    "declarationDir": "dist/typings",
   },
   "include": [
     "src/**/*.ts"
