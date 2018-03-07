@@ -76,13 +76,17 @@ Why does it maped one async action to many sync actions?
 In genernal overivew the async action can has one type but different state:
 
 ```
-({type: "GET_USERS", sequence: "start" }) -> ({type: "GET_USERS", sequence: "done" }) -> ({type: "GET_USERS", sequence: "error" })
+({type: "GET_USERS", sequence: "start" })
+    -> ({type: "GET_USERS", sequence: "done" })
+        -> ({type: "GET_USERS", sequence: "error" })
 ```
 
 or as usual in redux applications, different types araund the async action:
 
 ```
-({type: "GET_USERS" }) -> ({type: "GET_USERS_DONE"}) -> ({type: "GET_USERS_ERROR"})
+({type: "GET_USERS" })
+    -> ({type: "GET_USERS_DONE"})
+        -> ({type: "GET_USERS_ERROR"})
 ```
 
 The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or
