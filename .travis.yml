@@ -11,7 +11,7 @@ cache:
 script:
   - yarn
   - yarn run build
-  - yarn test
+  - yarn test:coverage
 notifications:
   on_failure: change # always|never
   on_success: never
