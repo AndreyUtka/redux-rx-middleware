@@ -7,24 +7,29 @@
 
 For the official integration (from core contributors) with [RxJS](http://reactivex.io/rxjs/) and [Redux](https://redux.js.org/), please look at [redux-observable](https://redux-observable.js.org)
 
-This is just simple middleware as like as [redux-promise](https://github.com/redux-utilities/redux-promise) which brings support [Rx.Observable](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html)  for the actions.
+This is just simple middleware as like as [redux-promise](https://github.com/redux-utilities/redux-promise) which brings support [Rx.Observable](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html) for the actions.
 
 ### Why not just redux-observable?
 
 at first redux-observable uses [Epics](https://redux-observable.js.org/docs/basics/Epics.html) to describe async actions in redux.
+
 > Epic is a function which takes a stream of actions and returns a stream of actions. Actions in, actions out.
 
 so you can feel free to manage your stream of actions with Epics.
 this redux-rx-middleware provides 2 thisngs:
-- in case if payload be Observable, it will subscribe to this Observable stream
-- it will handle one Observable action to many simple actions with different state of execution. It means for exmaple incoming action:
+
+*   in case if payload be Observable, it will subscribe to this Observable stream
+*   it will handle one Observable action to many simple actions with different state of execution. It means for exmaple incoming action:
+
 ```typescript
 {
     type: "ACTION_TYPE",
     payload: Rx.Observable.from([1, 2, 3]),
 }
 ```
+
 outcoming actions will be
+
 ```typescript
 {
     type: "ACTION_TYPE",
@@ -67,3 +72,19 @@ outcoming actions will be
 }
 ```
 
+Why does it maped one async action to many sync actions?
+In genernal overivew the async action can has one type but different state:
+
+```
+({type: "GET_USERS", sequence: "start" }) -> ({type: "GET_USERS", sequence: "done" }) -> ({type: "GET_USERS", sequence: "error" })
+```
+
+or as usual in redux applications, different types araund the async action:
+
+```
+({type: "GET_USERS" }) -> ({type: "GET_USERS_DONE"}) -> ({type: "GET_USERS_ERROR"})
+```
+
+The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or
+by action type, but you can delegate the creation of the state actions to middleware, don't create addition action
+by your self. The main goal of this simle middleware that one async action (with Rx api) has differnt states and you can just handle it reducer
