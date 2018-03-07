@@ -4,6 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 
 export enum Sequence {
+    Start = "start",
     Next = "next",
     Error = "error",
     Complete = "complete",
@@ -24,7 +25,9 @@ class ActionObserver implements Observer<any> {
     constructor(
         private action: IObservableAction,
         private onNext: (newAction: ActionMeta<any, IObservableMeta>) => void
-    ) {}
+    ) {
+        this.start();
+    }
 
     public next(data: any) {
         this.onNext(this.createAction(Sequence.Next, data));
@@ -36,6 +39,10 @@ class ActionObserver implements Observer<any> {
 
     public complete() {
         this.onNext(this.createAction(Sequence.Complete));
+    }
+
+    private start() {
+        this.onNext(this.createAction(Sequence.Start));
     }
 
     private createAction(sequence: Sequence, newPayload: any = null, error = false): ActionMeta<any, IObservableMeta> {

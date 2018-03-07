@@ -22,6 +22,7 @@ describe("RxMiddleware", () => {
         dispatch(action);
 
         expect(mockDispatch.mock.calls).toEqual([
+            [{ meta: { sequence: Sequence.Start }, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next }, payload: 1, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next }, payload: 2, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next }, payload: 3, type: "ACTION_TYPE" }],
@@ -38,6 +39,7 @@ describe("RxMiddleware", () => {
         dispatch(action);
 
         expect(mockDispatch.mock.calls).toEqual([
+            [{ meta: { sequence: Sequence.Start }, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next }, payload: 1, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next }, payload: 2, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Error }, payload: error, error: true, type: "ACTION_TYPE" }],
@@ -55,6 +57,7 @@ describe("RxMiddleware", () => {
         dispatch(action);
 
         expect(mockDispatch.mock.calls).toEqual([
+            [{ meta: { sequence: Sequence.Start, test: "test" }, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next, test: "test" }, payload: 1, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next, test: "test" }, payload: 2, type: "ACTION_TYPE" }],
             [{ meta: { sequence: Sequence.Next, test: "test" }, payload: 3, type: "ACTION_TYPE" }],

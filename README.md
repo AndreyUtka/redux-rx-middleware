@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 [![npm downloads](https://img.shields.io/npm/dm/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 
-Official (from core contributors of [RxJS](http://reactivex.io/rxjs/)) integration of the [RxJS](http://reactivex.io/rxjs/) with [Redux](https://redux.js.org/) is [redux-observable](https://redux-observable.js.org)
+Official (from core contributors of [RxJS](http://reactivex.io/rxjs/)) integration [Redux](https://redux.js.org/) with  is [redux-observable](https://redux-observable.js.org)
 
 This is simple middleware as like as [redux-promise](https://github.com/redux-utilities/redux-promise) which brings support for the action with [Rx.Observable](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html)
 
