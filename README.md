@@ -6,8 +6,8 @@
 [![npm downloads](https://img.shields.io/npm/dm/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 
 ## dependencies
-- `redux` becouse it's middleware for redux
-- `rxjs` becouse it's rx middleware
+- `redux` because it's middleware for redux
+- `rxjs` because it's rx middleware
 - `tslib` for `cls` and `esm` packages it uses three shaking to decrease bundle size
 - `@types/redux-actions` for support FSA for redux
 
@@ -24,7 +24,7 @@ at first redux-observable uses [Epics](https://redux-observable.js.org/docs/basi
 so you can feel free to manage your stream of actions with Epics.
 this redux-rx-middleware provides 2 things:
 
-*   in case if payload be Observable, it will subscribe to this Observable stream
+*   in case if payload is Observable, it will subscribe to this Observable stream
 *   it will handle one Observable action to many simple actions with different state of execution. It means for exmaple incoming action:
 
 ```typescript
@@ -78,8 +78,8 @@ outcoming actions will be
 }
 ```
 
-Why does it maped one async action to many sync actions?
-In genernal overivew the async action can has one type but different state:
+Why does it mapped one async action to many sync actions?
+In genernal overivew the async action can has one type but different states:
 
 ```
 ({type: "GET_USERS", sequence: "start" })
@@ -87,7 +87,7 @@ In genernal overivew the async action can has one type but different state:
         -> ({type: "GET_USERS", sequence: "error" })
 ```
 
-or as usual in redux applications, different types araund the async action:
+or as usual in redux applications, different types araund the one async action:
 
 ```
 ({type: "GET_USERS" })
@@ -95,6 +95,6 @@ or as usual in redux applications, different types araund the async action:
         -> ({type: "GET_USERS_ERROR"})
 ```
 
-The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or
+The benefit of the first flow that in the both cases you need to handle this actions in reducer by sequence state or
 by action type, but you can delegate the creation of the state actions to middleware, don't create addition action
 by your self. The main goal of this simle middleware that one async action (with Rx api) has differnt states and you can just handle it reducer
