@@ -34,7 +34,7 @@ this redux-rx-middleware provides 2 things:
 }
 ```
 
-outcoming actions will be
+out coming actions will be
 
 ```typescript
 {
@@ -78,7 +78,7 @@ outcoming actions will be
 }
 ```
 
-Why does it mapped one async action to many sync actions? In genernal overivew the async action can has one type but different states:
+Why does it mapped one async action to many sync actions? In general overview the async action can has one type but different states:
 
 ```
 ({type: "GET_USERS", sequence: "start" })
@@ -86,7 +86,7 @@ Why does it mapped one async action to many sync actions? In genernal overivew t
         -> ({type: "GET_USERS", sequence: "error" })
 ```
 
-or as usual in redux applications, different types araund the one async action:
+or as usual in redux applications, different types around the one async action:
 
 ```
 ({type: "GET_USERS" })
@@ -94,4 +94,4 @@ or as usual in redux applications, different types araund the one async action:
         -> ({type: "GET_USERS_ERROR"})
 ```
 
-The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or by action type, but you can delegate the creation of the state actions to middleware, don't create additional action by your self. The main goal of this simple middleware that one async action (with Rx API) has different states and you can just handle it reducer
+The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or by action type, but you can delegate the creation of the state actions to middleware, don't create additional action by yourself. The main goal of this simple middleware that one async action (with Rx API) has different states and you can just handle it reducer
