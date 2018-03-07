@@ -5,6 +5,12 @@
 [![npm version](https://img.shields.io/npm/v/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 [![npm downloads](https://img.shields.io/npm/dm/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 
+## dependencies
+- `redux` becouse it's middleware for redux
+- `rxjs` becouse it's rx middleware
+- `tslib` for `cls` and `esm` packages it uses three shaking to decrease bundle size
+- `@types/redux-actions` for support FSA for redux
+
 For the official integration (from core contributors) with [RxJS](http://reactivex.io/rxjs/) and [Redux](https://redux.js.org/), please look at [redux-observable](https://redux-observable.js.org)
 
 This is just simple middleware as like as [redux-promise](https://github.com/redux-utilities/redux-promise) which brings support [Rx.Observable](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html) for the actions.
