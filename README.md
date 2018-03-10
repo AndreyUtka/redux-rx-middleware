@@ -1,5 +1,7 @@
 # redux-rx-middleware
 
+simple rxjs integration for redux
+
 [![build status](https://img.shields.io/travis/AndreyUtka/redux-rx-middleware/master.svg?style=flat-square)](https://travis-ci.org/AndreyUtka/redux-rx-middleware)
 [![Codecov](https://img.shields.io/codecov/c/github/AndreyUtka/redux-rx-middleware.svg?style=flat-square)](https://codecov.io/gh/AndreyUtka/redux-rx-middleware)
 [![npm version](https://img.shields.io/npm/v/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
