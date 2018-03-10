@@ -27,6 +27,7 @@
     "build:cjs": "tsc -p config/tsconfig.cjs.json",
     "build:esm": "tsc -p config/tsconfig.esm.json",
     "build:umd": "node scripts/rollup.config.js",
+    "prepublish": "npm run build && npm run styleguide",
     "styleguide": "npm run lint && npm run format:check",
     "lint": "tslint --project ./tsconfig.json --force --format stylish",
     "format:fix": "prettier -l --write '{scripts,src}/**/*.{ts,js}' || exit 0",
