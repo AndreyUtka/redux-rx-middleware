@@ -5,11 +5,24 @@
 [![npm version](https://img.shields.io/npm/v/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 [![npm downloads](https://img.shields.io/npm/dm/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 
+## install
+`npm i redux-rx-middleware`
+
+or
+
+`yarn add redux-rx-middleware`
+
 ## dependencies
 - `redux` because it's middleware for redux
 - `rxjs` because it's rx middleware
 - `tslib` for `cls` and `esm` packages it uses three shaking to decrease bundle size
 - `@types/redux-actions` for support FSA for redux
+
+### usage
+
+```typescript
+import { rxMiddleware } from "redux-rx-middleware";
+```
 
 For the official integration (from core contributors) with [RxJS](http://reactivex.io/rxjs/) and [Redux](https://redux.js.org/), please take a look at [redux-observable](https://redux-observable.js.org)
 
@@ -94,4 +107,4 @@ or as usual in redux applications, different types around the one async action:
         -> ({type: "GET_USERS_ERROR"})
 ```
 
-The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or by action type, but you can delegate the creation of the state actions to middleware, don't create additional action by yourself. The main goal of this simple middleware that one async action (with Rx API) has different states and you can just handle it reducer
+The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or by action type, but you can delegate the creation of the state actions to middleware, don't create additional action by yourself. The main goal of this simple middleware that one async action (with Rx API) has different states and you can just handle it in your reducer.
