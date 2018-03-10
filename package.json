@@ -13,6 +13,14 @@
     "npm": ">=5.6.0",
     "yarn": ">=1.5.1"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/typings/index.d.ts",
   "scripts": {
     "prebuild": "rm -rf ./dist",
     "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
