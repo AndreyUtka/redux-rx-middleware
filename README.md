@@ -5,14 +5,16 @@
 [![npm version](https://img.shields.io/npm/v/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 [![npm downloads](https://img.shields.io/npm/dm/redux-rx-middleware.svg?style=flat-square)](https://www.npmjs.com/package/redux-rx-middleware)
 
-## install
+### install
+
 `npm i redux-rx-middleware`
 
 or
 
 `yarn add redux-rx-middleware`
 
-## dependencies
+### dependencies
+
 - `redux` because it's middleware for redux
 - `rxjs` because it's rx middleware
 - `tslib` for `cls` and `esm` packages it uses three shaking to decrease bundle size
