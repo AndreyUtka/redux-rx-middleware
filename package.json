@@ -2,6 +2,7 @@
   "name": "redux-rx-middleware",
   "version": "1.0.1",
   "repository": "git@github.com:AndreyUtka/redux-rx-middleware.git",
+  "description": "simple rxjs integration for redux",
   "author": "AndreyUtka <AndreyUtka@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -17,6 +18,12 @@
     "LICENSE",
     "README.md",
     "dist"
+  ],
+  "keywords": [
+    "redux",
+    "rxjs",
+    "middleware",
+    "redux-middleware"
   ],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
