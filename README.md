@@ -32,8 +32,9 @@ import { rxMiddleware } from "redux-rx-middleware";
 dispatch action with observable stream
 ```typescript
 import { from } from "rxjs/observable/from";
+import { OBSERVABLE_API, ObservableAction } from "./";
 
-export function fetch() {
+export function fetch(): ObservableAction<number> {
     return {
         type: "ACTION_TYPE",
         meta: {
@@ -58,27 +59,27 @@ first of all, redux-observable uses [Epics](https://redux-observable.js.org/docs
 so you can feel free to manage your stream of actions with Epics.
 this redux-rx-middleware provides 2 things:
 
-*   in case if a payload is Observable, it will subscribe to this Observable stream
+*   in case if `meta` has a key with an Observable stream, it will subscribe to this stream
 *   it will handle one Observable action to many simple actions with a different state of execution. It means, for example, incoming action:
 
 ```typescript
 {
     type: "ACTION_TYPE",
     meta: {
-        [OBSERVABLE_API]: {
+        ["@api/OBSERVABLE_API"]: {
             stream: from([1, 2, 3]),
         },
     },
 }
 ```
 
-out coming actions will be
+outgoing actions will be
 
 ```typescript
 {
     type: "ACTION_TYPE",
     meta: {
-        [OBSERVABLE_API]: {
+        ["@api/OBSERVABLE_API"]: {
             sequence: "start",
         },
     },
@@ -91,7 +92,7 @@ out coming actions will be
     type: "ACTION_TYPE",
     payload: 1,
     meta: {
-        [OBSERVABLE_API]: {
+        ["@api/OBSERVABLE_API"]: {
             sequence: "next",
         },
     },
@@ -104,7 +105,7 @@ out coming actions will be
     type: "ACTION_TYPE",
     payload: 2,
     meta: {
-        [OBSERVABLE_API]: {
+        ["@api/OBSERVABLE_API"]: {
             sequence: "next",
         },
     },
@@ -117,7 +118,7 @@ out coming actions will be
     type: "ACTION_TYPE",
     payload: 3,
     meta: {
-        [OBSERVABLE_API]: {
+        ["@api/OBSERVABLE_API"]: {
             sequence: "next",
         },
     },
@@ -129,7 +130,7 @@ out coming actions will be
 {
     type: "ACTION_TYPE",
     meta: {
-        [OBSERVABLE_API]: {
+        ["@api/OBSERVABLE_API"]: {
             sequence: "complete",
         },
     },
