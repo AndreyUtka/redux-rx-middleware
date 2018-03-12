@@ -1,8 +1,11 @@
-import { Action, Dispatch } from "redux";
-import { Action as ActionPayload, ActionMeta } from "redux-actions";
+import { Action, Middleware } from "redux";
+import { ActionMeta } from "redux-actions";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
 
+/**
+ * Represents sequence of execution an observable action.
+ */
 export enum Sequence {
     Start = "start",
     Next = "next",
@@ -10,21 +13,42 @@ export enum Sequence {
     Complete = "complete",
 }
 
-export interface IObservableMeta {
-    sequence: Sequence;
+/**
+ * action META key
+ */
+export const OBSERVABLE_API = "@api/OBSERVABLE_API";
+
+export interface ObservableApi<TObservable = any> {
+    stream: Observable<TObservable>;
 }
 
-export interface IObservableAction<TObservable = any, TMeta = any> extends ActionPayload<Observable<TObservable>> {
-    meta?: TMeta;
+/**
+ * Incoming action META type
+ */
+export interface ObservableMetaIn<TObservable = any> {
+    [OBSERVABLE_API]: ObservableApi<TObservable>;
 }
 
-export type TypedAction = Action | ActionPayload<any> | IObservableAction;
-export type RxMiddleware = <S>() => (next: Dispatch<S>) => <A extends TypedAction>(action: A) => A;
+/**
+ * Out coming action META type
+ */
+export interface ObservableMetaOut {
+    [OBSERVABLE_API]: {
+        sequence: Sequence;
+    };
+}
+
+/**
+ * Action with Observable META
+ */
+export type ObservableAction<TPayload = any> = ActionMeta<TPayload, ObservableMetaIn>;
+
+type TypedAction = Action | ObservableAction;
 
 class ActionObserver implements Observer<any> {
     constructor(
-        private action: IObservableAction,
-        private onNext: (newAction: ActionMeta<any, IObservableMeta>) => void
+        private action: ObservableAction,
+        private onNext: (newAction: ActionMeta<any, ObservableMetaOut>) => void
     ) {
         this.start();
     }
@@ -45,9 +69,16 @@ class ActionObserver implements Observer<any> {
         this.onNext(this.createAction(Sequence.Start));
     }
 
-    private createAction(sequence: Sequence, newPayload: any = null, error = false): ActionMeta<any, IObservableMeta> {
+    private createAction(
+        sequence: Sequence,
+        newPayload: any = null,
+        error = false
+    ): ActionMeta<any, ObservableMetaOut> {
         const { payload, meta, ...action } = this.action;
-        const newAction: ActionMeta<any, IObservableMeta> = { ...action, meta: { ...meta, sequence } };
+        const newAction: ActionMeta<any, ObservableMetaOut> = {
+            ...action,
+            meta: { ...meta, [OBSERVABLE_API]: { sequence } },
+        };
         if (newPayload) {
             newAction.payload = newPayload;
         }
@@ -55,13 +86,32 @@ class ActionObserver implements Observer<any> {
     }
 }
 
-export const rxMiddleware: RxMiddleware = () => (next) => <A extends TypedAction>(action: A): A => {
-    if ((action as ActionPayload<any>).payload instanceof Observable) {
-        (action as IObservableAction).payload.subscribe(
-            new ActionObserver(action, (newAction: ActionMeta<any, IObservableMeta>) => next(newAction))
-        );
-        return action;
+/**
+ * A Redux middleware that processes Observable actions.
+ *
+ * @type {ReduxMiddleware}
+ * @access public
+ */
+export const rxMiddleware: Middleware = () => (next) => <A extends TypedAction>(action: A): A => {
+    const observableApi: ObservableApi =
+        (action as ActionMeta<any, any>).meta && (action as ActionMeta<any, any>).meta[OBSERVABLE_API];
+
+    if (!observableApi) {
+        return next(action);
     }
 
-    return next(action);
+    const { stream } = observableApi;
+
+    // double check for non typescript projects
+    if (!(stream instanceof Observable)) {
+        throw new Error("stream property must be Observable");
+    }
+
+    stream.subscribe(
+        new ActionObserver(action as ObservableAction, (newAction: ActionMeta<any, ObservableMetaOut>) =>
+            next(newAction)
+        )
+    );
+
+    return action;
 };

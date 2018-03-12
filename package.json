@@ -1,6 +1,6 @@
 {
   "name": "redux-rx-middleware",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "repository": "git@github.com:AndreyUtka/redux-rx-middleware.git",
   "description": "simple rxjs integration for redux",
   "author": "AndreyUtka <AndreyUtka@gmail.com>",
