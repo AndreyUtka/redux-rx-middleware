@@ -198,6 +198,19 @@ describe("RxMiddleware", () => {
         ]);
     });
 
+    it("should through error if meta type is not Observable", () => {
+        const action = {
+            type: "ACTION_TYPE",
+            meta: {
+                [OBSERVABLE_API]: {
+                    stream: new Promise(() => {}),
+                },
+            },
+        };
+
+        expect(() => dispatch(action)).toThrow("stream property must be Observable");
+    });
+
     it("should ignore non-observables", () => {
         dispatch({ type: "ACTION_TYPE" });
         expect(mockDispatch.mock.calls).toEqual([[{ type: "ACTION_TYPE" }]]);
