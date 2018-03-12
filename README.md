@@ -1,6 +1,6 @@
 # redux-rx-middleware
 
-simple rxjs integration for redux
+🤪 simple rxjs integration for redux
 
 [![build status](https://img.shields.io/travis/AndreyUtka/redux-rx-middleware/master.svg?style=flat-square)](https://travis-ci.org/AndreyUtka/redux-rx-middleware)
 [![Codecov](https://img.shields.io/codecov/c/github/AndreyUtka/redux-rx-middleware.svg?style=flat-square)](https://codecov.io/gh/AndreyUtka/redux-rx-middleware)
@@ -24,8 +24,25 @@ or
 
 ### usage
 
+add middleware
+
 ```typescript
 import { rxMiddleware } from "redux-rx-middleware";
+```
+dispatch action with observable stream
+```typescript
+import { from } from "rxjs/observable/from";
+
+export function fetch() {
+    return {
+        type: "ACTION_TYPE",
+        meta: {
+            [OBSERVABLE_API]: {
+                stream: from([1, 2, 3]),
+            },
+        },
+    };
+}
 ```
 
 For the official integration (from core contributors) with [RxJS](http://reactivex.io/rxjs/) and [Redux](https://redux.js.org/), please take a look at [redux-observable](https://redux-observable.js.org)
@@ -47,7 +64,11 @@ this redux-rx-middleware provides 2 things:
 ```typescript
 {
     type: "ACTION_TYPE",
-    payload: Rx.Observable.from([1, 2, 3]),
+    meta: {
+        [OBSERVABLE_API]: {
+            stream: from([1, 2, 3]),
+        },
+    },
 }
 ```
 
@@ -56,7 +77,11 @@ out coming actions will be
 ```typescript
 {
     type: "ACTION_TYPE",
-    meta: { sequence: "start" }
+    meta: {
+        [OBSERVABLE_API]: {
+            sequence: "start",
+        },
+    },
 }
 ------------------------------
               |
@@ -65,7 +90,11 @@ out coming actions will be
 {
     type: "ACTION_TYPE",
     payload: 1,
-    meta: { sequence: "next" }
+    meta: {
+        [OBSERVABLE_API]: {
+            sequence: "next",
+        },
+    },
 }
 ------------------------------
               |
@@ -74,7 +103,11 @@ out coming actions will be
 {
     type: "ACTION_TYPE",
     payload: 2,
-    meta: { sequence: "next" }
+    meta: {
+        [OBSERVABLE_API]: {
+            sequence: "next",
+        },
+    },
 }
 ------------------------------
               |
@@ -83,7 +116,11 @@ out coming actions will be
 {
     type: "ACTION_TYPE",
     payload: 3,
-    meta: { sequence: "next" }
+    meta: {
+        [OBSERVABLE_API]: {
+            sequence: "next",
+        },
+    },
 }
 ------------------------------
               |
@@ -91,7 +128,11 @@ out coming actions will be
               V
 {
     type: "ACTION_TYPE",
-    meta: { sequence: "complete" }
+    meta: {
+        [OBSERVABLE_API]: {
+            sequence: "complete",
+        },
+    },
 }
 ```
 
@@ -99,16 +140,20 @@ Why does it mapped one async action to many sync actions? In general overview th
 
 ```
 ({type: "GET_USERS", sequence: "start" })
-    -> ({type: "GET_USERS", sequence: "done" })
-        -> ({type: "GET_USERS", sequence: "error" })
+                  👇🏼
+({type: "GET_USERS", sequence: "done" })
+                  👇🏼
+({type: "GET_USERS", sequence: "error" })
 ```
 
 or as usual in redux applications, different types around the one async action:
 
 ```
 ({type: "GET_USERS" })
-    -> ({type: "GET_USERS_DONE"})
-        -> ({type: "GET_USERS_ERROR"})
+          👇🏼
+({type: "GET_USERS_DONE"})
+          👇🏼
+({type: "GET_USERS_ERROR"})
 ```
 
 The benefit of the first flow that in both cases you need to handle this actions in reducer by sequence state or by action type, but you can delegate the creation of the state actions to middleware, don't create additional action by yourself. The main goal of this simple middleware that one async action (with Rx API) has different states and you can just handle it in your reducer.
