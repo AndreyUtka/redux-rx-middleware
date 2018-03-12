@@ -32,9 +32,9 @@ import { rxMiddleware } from "redux-rx-middleware";
 dispatch action with observable stream
 ```typescript
 import { from } from "rxjs/observable/from";
-import { OBSERVABLE_API, ObservableAction } from "./";
+import { OBSERVABLE_API, ObservableAction } from "redux-rx-middleware";
 
-export function fetch(): ObservableAction<number> {
+export function observableAction(): ObservableAction<number> {
     return {
         type: "ACTION_TYPE",
         meta: {
