@@ -3,7 +3,7 @@ import { concat } from "rxjs/observable/concat";
 import { from } from "rxjs/observable/from";
 import { of } from "rxjs/observable/of";
 import { _throw } from "rxjs/observable/throw";
-import { OBSERVABLE_API, ObservableApi, ObservableAction, rxMiddleware, Sequence } from "./";
+import { OBSERVABLE_API, ObservableAction, ObservableApi, rxMiddleware, Sequence } from "./";
 
 describe("RxMiddleware", () => {
     let mockDispatch: jest.Mock;
@@ -203,7 +203,7 @@ describe("RxMiddleware", () => {
             type: "ACTION_TYPE",
             meta: {
                 [OBSERVABLE_API]: {
-                    stream: new Promise(() => {}),
+                    stream: Promise.resolve(),
                 },
             },
         };
