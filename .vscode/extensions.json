@@ -4,6 +4,6 @@
     "esbenp.prettier-vscode",
     "eg2.tslint",
     "Orta.vscode-jest",
-    "christian-kohler.path-intellisense",
+    "christian-kohler.path-intellisense"
   ]
 }
