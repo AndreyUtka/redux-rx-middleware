@@ -1,8 +1,5 @@
 import { Dispatch } from "redux";
-import { concat } from "rxjs/observable/concat";
-import { from } from "rxjs/observable/from";
-import { of } from "rxjs/observable/of";
-import { _throw } from "rxjs/observable/throw";
+import { concat, from, of, throwError } from "rxjs";
 import { OBSERVABLE_API, ObservableAction, ObservableApi, rxMiddleware, Sequence } from "./";
 
 describe("RxMiddleware", () => {
@@ -79,7 +76,7 @@ describe("RxMiddleware", () => {
             type: "ACTION_TYPE",
             meta: {
                 [OBSERVABLE_API]: {
-                    stream: concat(of(1, 2), _throw(error), of(3)),
+                    stream: concat(of(1, 2), throwError(error), of(3)),
                 },
             },
         };
