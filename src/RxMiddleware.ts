@@ -1,7 +1,6 @@
 import { Action, Middleware } from "redux";
 import { ActionMeta } from "redux-actions";
-import { Observable } from "rxjs/Observable";
-import { Observer } from "rxjs/Observer";
+import { Observable, Observer } from "rxjs";
 
 /**
  * Represents sequence of execution an observable action.
