@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint:latest", "rxjs-tslint-rules"],
+  "extends": ["tslint:latest"],
   "rules": {
     "trailing-comma": true,
     "no-import-side-effect": true,
@@ -34,11 +34,6 @@
         "asyncArrow": "always"
       }
     ],
-    "no-implicit-dependencies": false,
-    "rxjs-no-add": true,
-    "rxjs-deep-operators": true,
-    "rxjs-no-ignored-subscribe": true,
-    "rxjs-no-patched": true,
-    "rxjs-no-wholesale": true
+    "no-implicit-dependencies": false
   }
 }
