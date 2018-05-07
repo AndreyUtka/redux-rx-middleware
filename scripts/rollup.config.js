@@ -13,7 +13,7 @@ execAsync(`mkdir -p dist/umd`)
     .then(() =>
         rollup({
             input: "./dist/esm/index.js",
-            external: ["rxjs/Observable"],
+            external: ["rxjs"],
             plugins: [resolve()],
         })
     )
@@ -22,7 +22,7 @@ execAsync(`mkdir -p dist/umd`)
             format: "iife",
             name: "ReduxRxMiddleware",
             globals: {
-                "rxjs/Observable": "Rx",
+                rxjs: "Rx",
             },
         })
     )
