@@ -17,6 +17,8 @@ or
 
 ### dependencies
 
+it supports rxjs 6.x versions
+
 - `redux` because it's middleware for redux
 - `rxjs` because it's rx middleware
 - `tslib` for `cls` and `esm` packages it uses three shaking to decrease bundle size
@@ -31,7 +33,7 @@ import { rxMiddleware } from "redux-rx-middleware";
 ```
 dispatch action with observable stream
 ```typescript
-import { from } from "rxjs/observable/from";
+import { from } from "rxjs";
 import { OBSERVABLE_API, ObservableAction } from "redux-rx-middleware";
 
 export function observableAction(): ObservableAction<number> {

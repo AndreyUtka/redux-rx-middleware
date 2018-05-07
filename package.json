@@ -11,8 +11,8 @@
   "homepage": "https://github.com/AndreyUtka/redux-rx-middleware#readme",
   "engines": {
     "node": ">=8.9.4",
-    "npm": ">=5.6.0",
-    "yarn": ">=1.5.1"
+    "npm": ">=6.0.0",
+    "yarn": ">=1.6.0"
   },
   "files": [
     "LICENSE",
