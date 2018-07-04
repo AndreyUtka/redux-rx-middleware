@@ -212,4 +212,66 @@ describe("RxMiddleware", () => {
         dispatch({ type: "ACTION_TYPE" });
         expect(mockDispatch.mock.calls).toEqual([[{ type: "ACTION_TYPE" }]]);
     });
+
+    it("should save origin payload", () => {
+        const action: ObservableAction = {
+            type: "ACTION_TYPE",
+            payload: { test: "test" },
+            meta: {
+                [OBSERVABLE_API]: {
+                    stream: from([1, 2, 3]),
+                },
+            },
+        };
+
+        dispatch(action);
+
+        expect(mockDispatch.mock.calls).toEqual([
+            [
+                {
+                    meta: {
+                        [OBSERVABLE_API]: { sequence: Sequence.Start },
+                    },
+                    payload: { test: "test" },
+                    type: "ACTION_TYPE",
+                },
+            ],
+            [
+                {
+                    meta: {
+                        [OBSERVABLE_API]: { sequence: Sequence.Next },
+                    },
+                    payload: 1,
+                    type: "ACTION_TYPE",
+                },
+            ],
+            [
+                {
+                    meta: {
+                        [OBSERVABLE_API]: { sequence: Sequence.Next },
+                    },
+                    payload: 2,
+                    type: "ACTION_TYPE",
+                },
+            ],
+            [
+                {
+                    meta: {
+                        [OBSERVABLE_API]: { sequence: Sequence.Next },
+                    },
+                    payload: 3,
+                    type: "ACTION_TYPE",
+                },
+            ],
+            [
+                {
+                    meta: {
+                        [OBSERVABLE_API]: { sequence: Sequence.Complete },
+                    },
+                    payload: { test: "test" },
+                    type: "ACTION_TYPE",
+                },
+            ],
+        ]);
+    });
 });
