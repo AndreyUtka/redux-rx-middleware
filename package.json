@@ -36,9 +36,11 @@
     "build:umd": "node scripts/rollup.config.js",
     "prepare": "npm run build && npm run styleguide",
     "styleguide": "npm run lint && npm run format:check",
+    "styleguide:fix": "npm run lint:fix && npm run format:fix",
     "lint": "tslint --project ./tsconfig.json --force --format stylish",
-    "format:fix": "prettier -l --write '{scripts,src}/**/*.{ts,js}' || exit 0",
-    "format:check": "prettier -l '{scripts,src}/**/*.{ts,js}'",
+    "lint:fix": "npm run lint -- --fix",
+    "format:fix": "prettier -l --write '{scripts,config,src}/**/*.{ts,js}' || exit 0",
+    "format:check": "prettier -l '{scripts,config,src}/**/*.{ts,js}'",
     "test": "jest --config config/jest.config.js",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage && codecov"
