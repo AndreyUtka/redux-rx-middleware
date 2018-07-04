@@ -73,7 +73,7 @@ class ActionObserver implements Observer<any> {
         newPayload: any = null,
         error = false
     ): ActionMeta<any, ObservableMetaOut> {
-        const { payload, meta, ...action } = this.action;
+        const { meta, ...action } = this.action;
         const newAction: ActionMeta<any, ObservableMetaOut> = {
             ...action,
             meta: { ...meta, [OBSERVABLE_API]: { sequence } },
